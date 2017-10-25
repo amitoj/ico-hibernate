@@ -23,7 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SampleController {
@@ -36,6 +42,23 @@ public class SampleController {
 	@Transactional(readOnly = true)
 	public String helloWorld() {
 		return this.cityService.getCity("Bath", "UK").getName();
+	}
+
+	@RequestMapping(value={"/index","/hello"})
+	public String index(){
+		return "index";
+	}
+
+	@RequestMapping("/list")
+	@ResponseBody
+	public List<Map<String,String>> list(){
+		Map<String, String> map = new HashMap<>();
+		List<Map<String, String>> list = new ArrayList<>();
+		for (int i = 0; i < 5; i++) {
+			map.put("hello", "zyif" + i);
+			list.add(map);
+		}
+		return list;
 	}
 
 }
